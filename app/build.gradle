@@ -17,21 +17,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    packagingOptions {
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/spring.tooling'
-        exclude 'META-INF/spring.handlers'
-        exclude 'META-INF/spring-configuration-metadata.json'
-        exclude 'META-INF/spring.factories'
-        exclude 'META-INF/web-fragment.xml'
-        exclude 'META-INF/spring.provides'
-        exclude 'META-INF/additional-spring-configuration-metadata.json'
-        exclude 'META-INF/spring.schemas'
-    }
 
 }
 
@@ -44,7 +29,8 @@ dependencies {
     compile 'com.android.support:design:25.1.0'
     compile 'com.google.code.findbugs:jsr305:2.0.1'
     testCompile 'junit:junit:4.12'
-    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 
 }

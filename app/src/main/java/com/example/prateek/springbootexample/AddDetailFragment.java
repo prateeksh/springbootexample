@@ -1,14 +1,23 @@
 package com.example.prateek.springbootexample;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.prateek.springbootexample.R.id.google;
 
@@ -21,26 +30,19 @@ public class AddDetailFragment extends Fragment{
     private EditText mOccupation;
     private EditText mCompany;
     private EditText mPhone;
-    private EditText mWork;
-    private EditText mHangout;
-    private EditText mSkype;
     private EditText mGoogle;
-    private EditText mFb;
-    private EditText mBlog;
+
+    private TextView dispname;
+    private TextView dispocc;
+    private TextView dispcom;
+    private TextView dispph;
+    private TextView dispgoog;
 
     String name;
     String occ;
     String comp;
     String phone;
-    String work;
-    String hang;
-    String skype;
     String goog;
-    String fb;
-    String blog;
-
-
-
 
     public AddDetailFragment() {
     }
@@ -53,31 +55,80 @@ public class AddDetailFragment extends Fragment{
         mOccupation = (EditText) view.findViewById(R.id.occupation);
         mCompany = (EditText) view.findViewById(R.id.company);
         mPhone = (EditText) view.findViewById(R.id.phone);
-        mWork = (EditText) view.findViewById(R.id.work);
-        mHangout = (EditText) view.findViewById(R.id.hangout);
-        mSkype = (EditText) view.findViewById(R.id.skype);
         mGoogle = (EditText) view.findViewById(google);
-        mFb = (EditText) view.findViewById(R.id.facebook);
-        mBlog = (EditText) view.findViewById(R.id.blog);
+
+        dispname = (TextView) view.findViewById(R.id.dispname);
+        dispocc = (TextView) view.findViewById(R.id.dispoccupation);
+        dispcom = (TextView) view.findViewById(R.id.dispcompany);
+        dispph = (TextView) view.findViewById(R.id.dispphone);
+        dispgoog = (TextView) view.findViewById(R.id.dispgoogle);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://shielded-citadel-52821.herokuapp.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final UserService service = retrofit.create(UserService.class);
 
         Button submit = (Button) view.findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                User user = new User();
                 name = mName.getText().toString();
                 occ = mOccupation.getText().toString();
                 comp = mCompany.getText().toString();
                 phone = mPhone.getText().toString();
-                work = mWork.getText().toString();
-                hang = mHangout.getText().toString();
-                skype = mSkype.getText().toString();
                 goog = mGoogle.getText().toString();
-                fb = mFb.getText().toString();
-                blog = mBlog.getText().toString();
 
-                Toast.makeText(getActivity(), "Values added", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(),MainActivity.class);
-                startActivity(intent);
+                user.setName(name);
+                user.setOccupation(occ);
+                user.setCompany(comp);
+                user.setPhone(phone);
+                user.setGoogle(goog);
+                Log.v("DATA", user.toString());
+                Call<User> createCall = service.create(user);
+                createCall.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        User newUser = response.body();
+
+                        Toast.makeText(getContext(), newUser.name, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        t.printStackTrace();
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+               // Toast.makeText(getActivity(), "Values added", Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button viewData = (Button) view.findViewById(R.id.disp);
+        viewData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<List<User>> createCall = service.all();
+                createCall.enqueue(new Callback<List<User>>() {
+                    @Override
+                    public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                        Log.v("RESPONSE",response.toString());
+                        Log.v("RESPONSE 2",response.body().toString());
+                        User user = (User) response.body();
+                        dispname.setText(user.name);
+                        dispocc.setText(user.occupation);
+                        dispcom.setText(user.company);
+                        dispph.setText(user.phone);
+                        dispgoog.setText(user.google);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<User>> call, Throwable t) {
+                        t.printStackTrace();
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
 
