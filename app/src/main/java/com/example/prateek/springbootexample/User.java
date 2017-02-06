@@ -11,7 +11,6 @@ public class User {
 
     @SerializedName("id")
     int id;
-
     @SerializedName("name")
     String name;
     @SerializedName("occupation")
