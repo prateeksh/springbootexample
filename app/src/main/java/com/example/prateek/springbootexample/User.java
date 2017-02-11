@@ -13,12 +13,13 @@ public class User {
     int id;
     @SerializedName("name")
     String name;
+
     @SerializedName("occupation")
     String occupation;
-    @SerializedName("company")
+/*    @SerializedName("company")
     String company;
     @SerializedName("phone")
-    String phone;
+    String phone;*/
     @SerializedName("google")
     String google;
 
@@ -42,6 +43,7 @@ public class User {
         this.name = name;
     }
 
+
     public String getOccupation() {
         return occupation;
     }
@@ -50,21 +52,6 @@ public class User {
         this.occupation = occupation;
     }
 
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public String getGoogle() {
         return google;

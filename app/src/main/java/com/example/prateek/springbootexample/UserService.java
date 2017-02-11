@@ -14,12 +14,12 @@ import retrofit2.http.Path;
 
 public interface UserService {
 
-    @GET("users")
+    @GET("/result")
     Call<List<User>> all();
 
-    @GET("users/{name}")
+    @GET("/{name}")
     Call<User> get(@Path("name") String name);
 
-    @POST("users/new")
-    Call<User> create(@Body User user);
+    @POST("/addnew")
+    Call<User> update(@Body User user);
 }

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -64,7 +65,7 @@ public class AddDetailFragment extends Fragment{
         dispgoog = (TextView) view.findViewById(R.id.dispgoogle);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://shielded-citadel-52821.herokuapp.com")
+                .baseUrl("https://cryptic-savannah-42247.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -75,25 +76,23 @@ public class AddDetailFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 User user = new User();
-                name = mName.getText().toString();
-                occ = mOccupation.getText().toString();
-                comp = mCompany.getText().toString();
-                phone = mPhone.getText().toString();
-                goog = mGoogle.getText().toString();
+                user.setName(mName.getText().toString());
 
-                user.setName(name);
-                user.setOccupation(occ);
-                user.setCompany(comp);
-                user.setPhone(phone);
-                user.setGoogle(goog);
-                Log.v("DATA", user.toString());
-                Call<User> createCall = service.create(user);
+                Call<User> createCall = service.update(user);
                 createCall.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         User newUser = response.body();
-
-                        Toast.makeText(getContext(), newUser.name, Toast.LENGTH_LONG).show();
+                        //Log.v("Response", response.toString());
+                        if(response.body() == null){
+                            try {
+                                Log.v("Null","no response"+ response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Log.v("DATA", response.body().toString());
+                        Toast.makeText(getContext(), "Saved", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -118,8 +117,8 @@ public class AddDetailFragment extends Fragment{
                         User user = (User) response.body();
                         dispname.setText(user.name);
                         dispocc.setText(user.occupation);
-                        dispcom.setText(user.company);
-                        dispph.setText(user.phone);
+                     /*   dispcom.setText(user.company);
+                        dispph.setText(user.phone);*/
                         dispgoog.setText(user.google);
                     }
 
@@ -133,5 +132,9 @@ public class AddDetailFragment extends Fragment{
         });
 
         return view;
+    }
+
+    public void getImage(){
+
     }
 }

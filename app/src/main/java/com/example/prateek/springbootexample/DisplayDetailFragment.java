@@ -44,7 +44,7 @@ public class DisplayDetailFragment extends Fragment {
         goog = (TextView) view.findViewById(R.id.google);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://shielded-citadel-52821.herokuapp.com")
+                .baseUrl("https://cryptic-savannah-42247.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         final UserService service = retrofit.create(UserService.class);
