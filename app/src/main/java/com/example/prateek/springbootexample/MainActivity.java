@@ -6,12 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.prateek.springbootexample.WifiDirect.WifiDirectActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "wifidirect";
+    Button mAdd;
+    Button mSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +23,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mAdd = (Button) findViewById(R.id.add);
+        mAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(MainActivity.this, AddDetail.class);
+                startActivity(in);
+            }
+        });
+
+        mSend = (Button) findViewById(R.id.send);
+        mSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, WifiDirectActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -35,15 +56,12 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_view) {
-            return true;
-        }
-        if (id == R.id.action_send){
-            Intent intent = new Intent(this, WifiDirectActivity.class);
+            Intent intent = new Intent(this,RecievedFile.class);
             startActivity(intent);
         }
+
         return super.onOptionsItemSelected(item);
     }
 

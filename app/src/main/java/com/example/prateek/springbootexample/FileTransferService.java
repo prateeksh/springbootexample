@@ -1,4 +1,4 @@
-package com.example.prateek.springbootexample.WifiDirect;
+package com.example.prateek.springbootexample;
 
 import android.app.IntentService;
 import android.content.ContentResolver;
@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.prateek.springbootexample.MainActivity;
+import com.example.prateek.springbootexample.WifiDirect.DetailFragment;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import java.net.Socket;
 
 public class FileTransferService extends IntentService {
     private static final int SOCKET_TIMEOUT = 5000;
-    public static final String ACTION_SEND_FILE = "com.example.prateek.discoverdevicep2p.SEND_FILE";
+    public static final String ACTION_SEND_FILE = "com.example.prateek.springbootexample.SEND_FILE";
     public static final String EXTRAS_FILE_PATH = "file_url";
     public static final String EXTRAS_ADDRESS = "go_host";
     public static final String EXTRAS_PORT = "go_port";

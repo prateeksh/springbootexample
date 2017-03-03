@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.prateek.springbootexample.FileTransferService;
 import com.example.prateek.springbootexample.MainActivity;
 import com.example.prateek.springbootexample.R;
 
@@ -86,7 +87,7 @@ public class DetailFragment extends Fragment implements WifiP2pManager.Connectio
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.setType("text/x-vcard");
+                        intent.setType("text/plain");
                         startActivityForResult(intent, CHOOSE_FILE_RESULT_CODE);
                     }
                 }
@@ -121,9 +122,6 @@ public class DetailFragment extends Fragment implements WifiP2pManager.Connectio
                 + ((info.isGroupOwner == true) ? getResources().getString(R.string.yes)
                 : getResources().getString(R.string.no)));
 
-        /*textView = (TextView) rootView.findViewById(R.id.device_info);
-        textView.setText("Group Owner IP - " + info.groupOwnerAddress.getHostAddress());
-*/
 
         if (info.groupFormed && info.isGroupOwner) {
             Log.v(MainActivity.TAG, "Group Formed");
@@ -143,16 +141,13 @@ public class DetailFragment extends Fragment implements WifiP2pManager.Connectio
         TextView textView = (TextView) rootView.findViewById(R.id.address);
         textView.setText(device.deviceAddress);
 
-        textView = (TextView) rootView.findViewById(R.id.info);
-        textView.setText(device.toString());
     }
 
     public void resetViews() {
         rootView.findViewById(R.id.connect).setVisibility(View.VISIBLE);
         TextView view = (TextView) rootView.findViewById(R.id.address);
         view.setText(R.string.empty);
-        view = (TextView) rootView.findViewById(R.id.info);
-        view.setText(R.string.empty);
+
         view = (TextView) rootView.findViewById(R.id.status_text);
         view.setText(R.string.empty);
         //rootView.findViewById(R.id.sendData).setVisibility(View.GONE);
@@ -172,10 +167,11 @@ public class DetailFragment extends Fragment implements WifiP2pManager.Connectio
         @Override
         protected String doInBackground(Void... params) {
             try {
+                Log.v("BACKGROUND", "in background");
                 ServerSocket serverSocket = new ServerSocket(PORT);
                 Socket client = serverSocket.accept();
                 final File f = new File(Environment.getExternalStorageDirectory() + "/"
-                        + context.getPackageName() + "/wifip2pshared-" + System.currentTimeMillis()
+                        + context.getPackageName() + "/wifip2pshared"
                         + ".txt");
 
                 File dirs = new File(f.getParent());
@@ -199,11 +195,8 @@ public class DetailFragment extends Fragment implements WifiP2pManager.Connectio
         protected void onPostExecute(String result) {
             if (result != null) {
                 statusText.setText("File copied - " + result);
+                Log.v("RESULT", result);
                 Toast.makeText(context, "File Recieved", Toast.LENGTH_LONG).show();
-                /*Intent intent = new Intent();
-                intent.setAction(android.content.Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.parse("file://" + result), "text/x-vcard");
-                context.startActivity(intent);*/
             }
         }
 

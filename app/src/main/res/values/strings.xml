@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">SpringBootExample</string>
     <string name="action_settings">View</string>
+    <string name="view_recieved">View Recieved</string>
     <string name="action_send">Send</string>
+    <string name="add">Add</string>
     <string name="title_activity_add_detail">AddDetail</string>
     <string name="title_activity_display_detail">DisplayDetail</string>
     <string name="info">Enter your Details</string>
@@ -10,7 +12,7 @@
     <string name="wifi_enable">WiFi is Enabled</string>
     <string name="wifi_disabled">WiFi is Disabled</string>
     <string name="discover">Search For Devices</string>
-    <string name="clickbutton">Click on the button to search for devices</string>
+    <string name="clickbutton">Search</string>
     <string name="list_of_peers">List of Devices available</string>
     <!--   <string name="enable_p2p_button">P2P On/Off</string>
        <string name="discover_peers_button">Discover</string>-->
@@ -22,4 +24,6 @@
     <string name="group_owner">Group Owner</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="title_activity_add_detail_fragment">AddDetail</string>
+    <string name="title_activity_recieved_file">RecievedFile</string>
 </resources>

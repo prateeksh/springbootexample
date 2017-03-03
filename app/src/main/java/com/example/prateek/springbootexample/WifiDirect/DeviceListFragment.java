@@ -44,7 +44,7 @@ public class DeviceListFragment extends ListFragment implements WifiP2pManager.P
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_wifi_direct, container, false);
+        mView = inflater.inflate(R.layout.peer_list_item, null);
         return mView;
     }
 

@@ -114,8 +114,6 @@ public class DisplayDetailFragment extends Fragment {
         File root = Environment.getExternalStorageDirectory();
         Log.v("Log","\nExternal file system root: " + root);
 
-        // See http://stackoverflow.com/questions/3551821/android-write-to-sd-card-folder
-
         File dir = new File(root.getAbsolutePath() + "/BusinessCard");
         dir.mkdirs();
         File file = new File(dir, "userData.txt");
@@ -124,12 +122,11 @@ public class DisplayDetailFragment extends Fragment {
             Log.v("NAME", mName);
             FileOutputStream f = new FileOutputStream(file);
             PrintWriter pw = new PrintWriter(f);
-            pw.println("Name" + mName);
-            pw.println("Image" + mImage);
-            pw.println("Occupatoin" + mOccup);
-            pw.println("Company" + mComp);
-            pw.println("Phone" + mPh);
-            pw.println("Google" + mGoogle);
+            pw.println("Name " + mName + "\n");
+            pw.println("Occupatoin " + mOccup + "\n");
+            pw.println("Company " + mComp + "\n");
+            pw.println("Phone " + mPh + "\n");
+            pw.println("Google " + mGoogle + "\n");
             pw.flush();
             pw.close();
             f.close();
